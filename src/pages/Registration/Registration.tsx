@@ -1,16 +1,14 @@
 import s from './Registration.module.scss';
-import SugToAuth from '../../widgets/SugToAuth/SugToAuth';
 import AuthForm from '../../features/auth/ui/AuthForm';
+import { useTranslation } from 'react-i18next';
 
 const Registration = () => {
+  const {t} = useTranslation();
+
   return (
     <div className={s.registration}>
-      <SugToAuth />
-      <div className={s.stepper}>
-        <h1>Создание нового аккаунта</h1>
+        <h1>{t("registration.create")}</h1>
         <AuthForm />
-        <div></div>
-      </div>
     </div>
   );
 }

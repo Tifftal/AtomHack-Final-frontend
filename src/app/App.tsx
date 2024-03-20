@@ -6,11 +6,13 @@ import Registration from '../pages/Registration/Registration';
 import { MantineProvider } from '@mantine/core';
 import { theme } from './ThemeProvider';
 import MainPage from '../pages/MainPage/MainPage';
+import Navbar from '../widgets/Navbar/Navbar';
 
 function App() {
   return (
     <MantineProvider theme={theme}>
       <BrowserRouter>
+        <Navbar />
         <Routes>
           <Route path='/auth' element={<Auth />} />
           <Route path='/registration' element={<Registration />} />
