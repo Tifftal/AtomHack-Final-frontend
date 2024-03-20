@@ -9,4 +9,10 @@
 .form {
     min-width: 400px;
     align-content: center;
+    justify-content: center;
+}
+
+.suggest {
+    display: flex;
+    align-items: center;
 }
