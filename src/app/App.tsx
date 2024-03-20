@@ -14,9 +14,9 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route path='/' element={<Auth />} />
+          <Route path='/auth' element={<Auth />} />
           <Route path='/registration' element={<Registration />} />
-          <Route path='/main' element={<MainPage />} />
+          <Route path='/' element={<MainPage />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>
