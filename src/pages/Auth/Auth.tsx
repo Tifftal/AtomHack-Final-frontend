@@ -19,12 +19,14 @@ const Auth = () => {
       <form className={s.form}>
         <TextInput
           label="Email"
+          withAsterisk
           placeholder="Введите свой email"
           {...auth.getInputProps("email")}
         />
 
         <PasswordInput
           mt="sm"
+          withAsterisk
           label="Введите пароль"
           placeholder="Пароль"
           {...auth.getInputProps("password")}
