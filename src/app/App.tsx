@@ -5,6 +5,7 @@ import Auth from '../pages/Auth/Auth';
 import Registration from '../pages/Registration/Registration';
 import { MantineProvider } from '@mantine/core';
 import { theme } from './ThemeProvider';
+import MainPage from '../pages/MainPage/MainPage';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Routes>
           <Route path='/' element={<Auth />} />
           <Route path='/registration' element={<Registration />} />
+          <Route path='/main' element={<MainPage />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

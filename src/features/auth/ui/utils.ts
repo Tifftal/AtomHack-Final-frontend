@@ -18,10 +18,6 @@ export const ValidateForm = (
                     : null,
             surname:
                 values.surname.length < 2 ? 'Фамилия должна содержать не менее 2х символов' : null,
-            middlename:
-                values.middlename.length < 2 ? 'Отчество должно содержать не менее 2х символов' : null,
-            role:
-                values.role.length < 2 ? 'Должность должна содержать не менее 2х символов' : null,
         };
     }
 
