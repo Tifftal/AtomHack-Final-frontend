@@ -1,29 +1,10 @@
-.main {
-    background-color: var(--clr-main1);
-}
-
 .first {
-    width: 100vw;
-    height: 60vh;
-    background-image: url(../../assets/solen-feyissa-54xmXW7tJzo-unsplash.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 10vh;
-
-    h1 {
-        color: white;
-        padding: 2vh 2vw;
-        border-radius: 10px;
-        backdrop-filter: blur(5px);
-        -webkit-backdrop-filter: blur(5px);
-    }
+    color: white;
 }
 
 .second {
-    padding: 5vh 5vw;
+    color: white;
+    margin-top: 20px;
 
     p {
         font-size: 1em;
@@ -33,5 +14,48 @@
     ul {
         margin-top: 1em;
         font-weight: 500;
+    }
+}
+
+.blurredBackground {
+    margin: 100px 90px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    width: 80vw;
+    padding: 0 20px 10px;
+    border-radius: 15px;
+}
+
+.parallax {
+    height: 100vh;
+    position: relative;
+    overflow: hidden;
+
+    &>div {
+        position: absolute;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-size: cover;
+        transition: transform 0.2s ease;
+        width: 110%;
+        height: 110%;
+        z-index: 10;
+
+        &:nth-child(2) {
+            z-index: 11;
+        }
+    }
+
+    & .parallaxBg {
+        background-image: url("/src/assets/parallaxBg.png");
+    }
+
+    & .parallaxOrange {
+        background-image: url("/src/assets/parallaxOrange.png");
+    }
+
+    & .parallaxRed {
+        background-image: url("/src/assets/parallaxRed.png");
     }
 }
