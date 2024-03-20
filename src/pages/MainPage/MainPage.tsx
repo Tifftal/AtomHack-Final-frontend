@@ -20,6 +20,7 @@ const MainPage = () => {
                     <li>Crystals</li>
                     <li>Desert Whirlwind</li>
                 </ul>
+                <p>Each colony has one nuclear power plant and every year the number of systems that ensure their operation increases. However, technological progress has not been accompanied by a similar increase in the number of specialists. The demographic transition and migration of the population to new planets have led to a shortage of qualified engineers and technical specialists</p>
             </div>
         </div>
     )
