@@ -8,7 +8,7 @@ const Navbar = () => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
 
-    const [language, setLanguage] = useState("ru");
+    const [language, setLanguage] = useState("en");
 
     const changeLanguage = (language: string) => {
         switch (language) {
