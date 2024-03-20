@@ -99,7 +99,7 @@ const AuthForm = () => {
                         Назад
                     </Button>
                 )}
-                {active !== 3 && <Button onClick={nextStep} color='main.9'>Дальше</Button>}
+                {active !== 3 && <Button onClick={nextStep}>Дальше</Button>}
             </Group>
         </ >
     )
