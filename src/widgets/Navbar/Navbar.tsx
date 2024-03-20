@@ -5,10 +5,10 @@ import { useNavigate } from 'react-router-dom';
 const Navbar = () => {
     const navigate = useNavigate();
 
-    return(
+    return (
         <div className={s.navbar}>
             <h2>Talankina Varvara</h2>
-            <Button variant='outline' classNames={{label: s.label}} onClick={()=>navigate('/')}>Выйти</Button>
+            <Button variant='outline' classNames={{ label: s.label }} onClick={() => navigate('/auth')}>Выйти</Button>
         </div>
     )
 }

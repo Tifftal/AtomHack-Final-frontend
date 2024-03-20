@@ -6,7 +6,7 @@ const SugToAuth = () => {
     return (
         <div className={s.nav}>
             <p>Уже есть аккаунт?</p>
-            <Button component={Link} to="/" variant="subtle">Войти</Button>
+            <Button component={Link} to="/auth" variant="subtle">Войти</Button>
         </div>
     )
 }
