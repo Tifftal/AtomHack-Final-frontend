@@ -2,7 +2,12 @@ import { TextInput, Button, Group, PasswordInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import s from "./auth.module.scss";
 import { Link } from "react-router-dom";
+import { login } from "../../enteties/user/api";
+import { useState } from "react";
+
 const Auth = () => {
+
+  const [error, setError] = useState<string | null>(null);
   const auth = useForm({
     initialValues: {
       email: "",
@@ -16,11 +21,26 @@ const Auth = () => {
     },
   });
 
-  const handleLogin = () => {};
+  const handleLogin = () => {
+    login({
+      email: auth.values.email,
+      password: auth.values.password,
+    })
+      .then((data) => {
+        console.log(data);
+        setError(null);
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          setError("Неверные данные");
+        }
+      });
+  };
 
   return (
     <div className={s.content}>
       <form onSubmit={auth.onSubmit(handleLogin)} className={s.form}>
+        <p className={s.error}>{error}</p>
         <TextInput
           label="Email"
           withAsterisk
