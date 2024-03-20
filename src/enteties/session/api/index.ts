@@ -1,4 +1,4 @@
-import { API_URL } from "../../../shared/config";
+import { API_URL } from "../../../shared";
 import { Session } from "../model";
 
 export async function getCookie(): Promise<Session> {

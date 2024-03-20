@@ -8,6 +8,7 @@ import { theme } from './ThemeProvider';
 import MainPage from '../pages/MainPage/MainPage';
 import Navbar from '../widgets/Navbar/Navbar';
 import NotFound from '../pages/NotFound/NotFound';
+import { Chat } from '../widgets/Chat/Chat';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path='/registration' element={<Registration />} />
           <Route path='/' element={<MainPage />} />
           <Route path='*' element={<NotFound />} />
+          <Route path='/chat' element={<Chat />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

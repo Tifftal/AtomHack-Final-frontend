@@ -1,0 +1,55 @@
+.root {
+    padding-bottom: 12px;
+    --input-bar-radius: 50px;
+}
+
+.manage-block {
+    border-top: 2px solid var(--clr-outline);
+}
+
+.files {
+    padding-inline: 10px;
+    padding-block: 5px;
+    display: flex;
+    gap: 10px;
+
+    &.files-open {
+        border-top: 2px solid var(--clr-outline);
+    }
+}
+
+.input-bar {
+    display: grid;
+    min-height: var(--input-bar-radius);
+    grid-template-columns: var(--input-bar-radius) auto var(--input-bar-radius) var(--input-bar-radius);
+    justify-content: stretch;
+    align-items: end;
+    justify-items: center;
+    padding: 5px;
+
+    .input-area {
+        justify-self: normal;
+    }
+}
+
+.menu {
+    display: none;
+    opacity: 0;
+    margin: 0 5px 5px 5px;
+    transition:
+        opacity 0.3s ease-in-out,
+        display 0s ease-in-out 0.3s;
+
+    &.open {
+        display: grid block;
+        gap: 5px;
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
+    }
+    &.more {
+        grid-template-columns: 1fr 1fr;
+    }
+    &.odd > :last-child {
+        grid-column: -1/1;
+    }
+}
