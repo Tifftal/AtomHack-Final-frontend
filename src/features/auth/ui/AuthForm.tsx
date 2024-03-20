@@ -61,16 +61,24 @@ const AuthForm = () => {
                 </Stepper.Step>
 
                 <Stepper.Step label="Второй шаг" description="Настройка данных аккаунта">
-                    <TextInput mt="md" label="Email" placeholder="Email" {...form.getInputProps('email')} />
+                    <TextInput
+                        mt="md"
+                        label="Email"
+                        placeholder="example@mail.com"
+                        withAsterisk
+                        {...form.getInputProps('email')}
+                    />
                     <PasswordInput
                         label="Пароль"
                         placeholder="Пароль"
                         description="Не менее 6ти символов"
+                        withAsterisk
                         {...form.getInputProps('password')}
                     />
                     <PasswordInput
                         label="Повторите пароль"
                         placeholder="Повторите пароль"
+                        withAsterisk
                         {...form.getInputProps('confirmPassword')}
                     />
                 </Stepper.Step>
@@ -79,8 +87,9 @@ const AuthForm = () => {
                     <h2>Код подтверждения отправлен на Вашу почту: {form.values.email}</h2>
                     <TextInput
                         label="Введите код подтверждения"
-                        placeholder="000000"
+                        placeholder="123456"
                         {...form.getInputProps('code')}
+                        withAsterisk
                         className={s.code}
                     />
                 </Stepper.Step>
