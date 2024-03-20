@@ -1,13 +1,12 @@
-
 :root {
-    --clr-main1: #f2f0ff;
-    --clr-main2: ##e0dff2;
-    --clr-main3: #bfbdde;
-    --clr-main4: #9b98ca;
-    --clr-main5: #7d79ba;
-    --clr-main6: #6a65b0;
-    --clr-main7: #605bac;
-    --clr-main8: #504c97;
-    --clr-main9: #464388;
-    --clr-main10: #3b3979;
+    --clr-main1: #F8F0FC;
+    --clr-main2: #F3D9FA;
+    --clr-main3: #EEBEFA;
+    --clr-main4: #E599F7;
+    --clr-main5: #DA77F2;
+    --clr-main6: #CC5DE8;
+    --clr-main7: #BE4BDB;
+    --clr-main8: #AE3EC9;
+    --clr-main9: #9C36B5;
+    --clr-main10: #862E9C;
 }

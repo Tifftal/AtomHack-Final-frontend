@@ -33,8 +33,7 @@ const MainPage = () => {
 
     return (
         <div>
-            <Navbar />
-            < div className={s.parallax} >
+            <div className={s.parallax} >
                 <div ref={bgRef} className={`${s.parallaxBg} parallaxBg`}></div>
                 <div ref={parallaxRedRef} className={`${s.parallaxRed} parallaxRed`}></div>
                 <div ref={parallaxOrangeRef} className={`${s.parallaxOrange} parallaxOrange`}></div>
@@ -45,7 +44,6 @@ const MainPage = () => {
                             <h1>{t("main.title")}</h1>
                         </div>
                         <div className={s.second}>
-
                             <p>{t("main.text1")}</p>
                             <ul>{t("main.list")}
                                 <li>{t("main.l1")}</li>
