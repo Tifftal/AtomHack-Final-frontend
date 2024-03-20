@@ -22,7 +22,7 @@
     background: rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(5px);
     -webkit-backdrop-filter: blur(5px);
-    width: 79vw;
+    width: 85vw;
     padding: 0 20px 10px;
     border-radius: 15px;
 }
@@ -38,6 +38,7 @@
         background-position: center center;
         background-size: cover;
         transition: transform 0.2s ease;
+        transition: 1.5s cubic-bezier(.05, .5, 0, 1);
         width: 110%;
         height: 110%;
         z-index: 10;

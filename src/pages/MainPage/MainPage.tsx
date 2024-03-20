@@ -14,13 +14,13 @@ const MainPage = () => {
             const x = e.clientX / window.innerWidth;
             const y = e.clientY / window.innerHeight;
             if (bgRef.current) {
-                bgRef.current.style.transform = `translate(-${x * 20}px, -${y * 20}px)`;
+                bgRef.current.style.transform = `translate(-${x * 10}px, -${y * 10}px)`;
             }
             if (parallaxRedRef.current) {
-                parallaxRedRef.current.style.transform = `translate(-${x * 50}px, -${y * 50}px)`;
+                parallaxRedRef.current.style.transform = `translate(-${x * 10}px, -${y * 10}px)`;
             }
             if (parallaxOrangeRef.current) {
-                parallaxOrangeRef.current.style.transform = `translate(-${x * 100}px, -${y * 50}px)`;
+                parallaxOrangeRef.current.style.transform = `translate(-${x * 10}px, -${y * 10}px)`;
             }
         };
 
