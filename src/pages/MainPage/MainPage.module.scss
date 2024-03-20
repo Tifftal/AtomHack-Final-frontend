@@ -50,13 +50,16 @@
 
     & .parallaxBg {
         background-image: url("/src/assets/parallaxBg.png");
+        pointer-events: none;
     }
 
     & .parallaxOrange {
         background-image: url("/src/assets/parallaxOrange.png");
+        pointer-events: none;
     }
 
     & .parallaxRed {
         background-image: url("/src/assets/parallaxRed.png");
+        pointer-events: none;
     }
 }
