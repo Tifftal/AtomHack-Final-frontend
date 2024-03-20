@@ -1,4 +1,4 @@
-import { UserModel } from "../model";
+import { UserModel, normalizeUser } from "../model";
 import { API_URL } from "../../../shared/config";
 
 export async function loginUser(): Promise<UserModel> {
@@ -9,5 +9,5 @@ export async function loginUser(): Promise<UserModel> {
         throw new Error ('Нет такого пользователя')
     }
 
-    return user;
+    return normalizeUser(user);
 }

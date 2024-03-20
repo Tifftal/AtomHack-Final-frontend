@@ -2,7 +2,7 @@ import { TextInput, Button, Group, PasswordInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import s from "./auth.module.scss"
 const Auth = () => {
-    
+
   const auth = useForm({
     initialValues: {
       email: "",
@@ -16,7 +16,7 @@ const Auth = () => {
   });
   return (
     <div className={s.content}>
-      <form className={s.form} onSubmit={auth.onSubmit((values) => console.log(values))}>
+      <form className={s.form}>
         <TextInput
           label="Email"
           placeholder="Введите свой email"
