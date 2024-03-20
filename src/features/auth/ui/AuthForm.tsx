@@ -49,7 +49,7 @@ const AuthForm = () => {
                         {...form.getInputProps('name')}
                     />
                     <TextInput
-                        label="Отчетсво"
+                        label="Отчество"
                         placeholder="Иванович"
                         {...form.getInputProps('middlename')}
                     />
