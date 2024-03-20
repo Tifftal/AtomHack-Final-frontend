@@ -32,8 +32,8 @@ const Auth = () => {
           {...auth.getInputProps("password")}
         />
 
-        <Group justify="flex-end" mt="md">
-          <Button type="submit">Войти</Button>
+        <Group mt="md">
+          <Button style={{"width": "100%"}} type="submit">Войти</Button>
         </Group>
       </form>
     </div>
