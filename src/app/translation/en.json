@@ -1,0 +1,65 @@
+{
+    "translation": {
+        "navbar": {
+            "log-out-btn": "Log out"
+        },
+        "main": {
+            "title": "Nova-Terra",
+            "text1": "The year is 2150. Andromeda Galaxy, Nova Terra planet. In the era of space travel and interstellar colonies, humanity has reached new horizons in space exploration. The planet Nova Terra, rich in unique minerals, has become a key facility for the construction of nuclear power plants that provide energy not only to colonies on its surface, but also to long-range space expeditions.",
+            "list": "Nova Terra is divided into 5 colonies:",
+            "l1": "Aquarion",
+            "l2": "Green Maze",
+            "l3": "Terramorph",
+            "l4": "Crystals",
+            "l5": "Desert Whirlwind",
+            "text2": "Each colony has one nuclear power plant and every year the number of systems that ensure their operation increases. However, technological progress has not been accompanied by a similar increase in the number of specialists. The demographic transition and migration of the population to new planets have led to a shortage of qualified engineers and technical specialists"
+        },
+        "auth": {
+            "wrong-email": "Incorrect email",
+            "short-password": "Password is too short",
+            "email": "Enter your emaill",
+            "password": "Password",
+            "enter-password": "Enter your password",
+            "no-acc": "Don't have an account?",
+            "reg": "Register",
+            "log-in": "Log in"
+        },
+        "registration": {
+            "create": "Create a new account",
+            "have-acc": "Already have an account?",
+            "firststep": "First step",
+            "secondstep": "Second step",
+            "thirdstep": "Third step",
+            "firstdesc": "Basic data",
+            "seconddesc": "Setting up account information",
+            "thirddesc": "Confirmation",
+            "surname": "Surname",
+            "surnamepl": "Smith",
+            "name": "Name",
+            "namepl": "John",
+            "middlename": "Middle Name",
+            "middlenamepl": "Jack",
+            "role": "Position",
+            "rolepl": "Engineer",
+            "email": "Email",
+            "emailpl": "example@mail.com",
+            "password": "Password",
+            "passworddesc": "At least 6 characters",
+            "confpassword": "Repeat password",
+            "err": "Password mismatch",
+            "codesent": "A confirmation code has been sent to your email:",
+            "code": "Enter confirmation code",
+            "login": "Log in",
+            "prev": "Back",
+            "next": "Next"
+        },
+        "errors": {
+            "name": "The name must contain at least 2 characters",
+            "surname": "Surname must contain at least 2 characters",
+            "email": "Incorrect email",
+            "password": "The password must contain at least 6 characters",
+            "err": "Password mismatch",
+            "wrongcode": "Incorrect code"
+        }
+    }
+}
