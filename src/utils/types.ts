@@ -35,3 +35,14 @@ export enum ColonyPathEnum {
   Crystallia = "authatom.cry1s.ru",
   DesertVortex = "dustwind.cry1s.ru",
 }
+
+export interface ISessionDataClose {
+  timestamp: string;
+  sessionId: string;
+}
+
+export interface ISessionDataOpen {
+  timestamp: string;
+  sessionId: string;
+  pattern: "OPEN_SESSION";
+}
