@@ -6,6 +6,8 @@ import { useChat } from "./hooks/useChat";
 
 export const Chat = () => {
   const { footerProps, chatBlockProps, navProps } = useChat();
+
+
   return (
     <div className={styles.page}>
       <ChatNav {...navProps} />
