@@ -1,5 +1,5 @@
 import { UserModel, normalizeUser } from "../model";
-import { API_URL } from "../../../shared/config";
+import { API_URL } from "../../../shared";
 
 export async function loginUser(): Promise<UserModel> {
     const response = await fetch(`${API_URL}/auth/login`);

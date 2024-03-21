@@ -1,0 +1,15 @@
+.root {
+    background-color: var(--clr-main1);
+    padding-inline: 14px;
+    padding-block: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 2px solid var(--clr-outline);
+
+    .select {
+        max-width: 300px;
+        min-width: 200px;
+        width: 50%;
+    }
+}

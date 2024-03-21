@@ -1,12 +1,14 @@
 :root {
-    --clr-main1: #F8F0FC;
-    --clr-main2: #F3D9FA;
-    --clr-main3: #EEBEFA;
-    --clr-main4: #E599F7;
-    --clr-main5: #DA77F2;
-    --clr-main6: #CC5DE8;
-    --clr-main7: #BE4BDB;
-    --clr-main8: #AE3EC9;
-    --clr-main9: #9C36B5;
-    --clr-main10: #862E9C;
+  --clr-main1: #F8F0FC;
+  --clr-main2: #F3D9FA;
+  --clr-main3: #EEBEFA;
+  --clr-main4: #E599F7;
+  --clr-main5: #DA77F2;
+  --clr-main6: #CC5DE8;
+  --clr-main7: #BE4BDB;
+  --clr-main8: #AE3EC9;
+  --clr-main9: #9C36B5;
+  --clr-main10: #862E9C;
+
+    --clr-outline: rgb(220, 220, 220);
 }

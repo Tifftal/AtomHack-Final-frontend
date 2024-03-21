@@ -1,0 +1,22 @@
+.root {
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 8px;
+
+    .body {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+        row-gap: 10px;
+    }
+
+    .message-wrapper {
+        grid-column: 1/4;
+        display: flex;
+    }
+
+    .user {
+        grid-column: 3/-1;
+        flex-direction: row-reverse;
+    }
+}
