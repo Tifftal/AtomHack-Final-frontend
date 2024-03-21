@@ -78,6 +78,7 @@ const AuthForm = () => {
         })
           .then(() => {
             setCodeError(null);
+            localStorage.setItem("isAuth", "true");
             history("/"); 
           })
           .catch(() => {

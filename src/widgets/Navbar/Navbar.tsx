@@ -5,17 +5,28 @@ import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { TranslateMessage } from '../../shared/TranslateMessage/TranslateMessage';
 import { logout } from '../../enteties/user/api';
+import { getUser } from '../../enteties/user/api';
 
 const Navbar = () => {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
+    const [user, setUser] = useState<string>("");
+    const isAuth = localStorage.getItem("isAuth");
 
     const [language, setLanguage] = useState(localStorage.getItem("appLanguage") || "en");
-
     useEffect(() => {
         i18n.changeLanguage(language);
     }, [i18n, language]);
 
+    useEffect(() => {
+        if (isAuth) {
+            getUser()
+            .then((response) => {
+                console.log(response);
+                setUser(`${response.name} ${response.surname} ${response.middlename}`);
+            })
+        }
+    }, [isAuth, navigate])
     const changeLanguage = (language: string) => {
         TranslateMessage('ru', "Как тебя зовут?");
         switch (language) {
@@ -46,8 +57,21 @@ const Navbar = () => {
                 <button onClick={() => changeLanguage(language)}>{language}</button>
             </div>
             <div className={s.profilebtn}>
-                <h2>Talankina Varvara</h2>
-                <Button variant='outline' classNames={{ label: s.label }} onClick={handleOut}>{t("navbar.log-out-btn")}</Button>
+                <h2>
+                    {
+                        isAuth ?
+                        ""
+                        :
+                        user   
+                    }
+                </h2>
+                <Button variant='outline' classNames={{ label: s.label }} onClick={handleOut}>
+                    {isAuth ? 
+                    t("navbar.log-out-btn")
+                    : 
+                    t("auth.log-in")
+                    }
+                    </Button>
             </div>
         </div>
         )

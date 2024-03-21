@@ -15,7 +15,6 @@ import ChatBtn from '../enteties/ChatBtn/ChatBtn';
 
 function App() {
   const [isDraftOpen, setIsDraftOpen] = useState(false);
-
   return (
     <MantineProvider theme={theme}>
       <BrowserRouter>
