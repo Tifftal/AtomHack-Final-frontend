@@ -3,14 +3,11 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    h1{
-        margin-right: 10px;
-    }
+    justify-content: space-between;
 }
 
 .second {
     color: white;
-    margin-top: 20px;
 
     p {
         font-size: 1em;
