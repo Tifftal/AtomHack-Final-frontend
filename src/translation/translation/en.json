@@ -60,6 +60,9 @@
             "password": "The password must contain at least 6 characters",
             "err": "Password mismatch",
             "wrongcode": "Incorrect code"
+        },
+        "chatbtn": {
+            "title": "Support"
         }
     }
 }
