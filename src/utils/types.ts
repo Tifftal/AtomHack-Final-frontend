@@ -27,3 +27,11 @@ export enum ColonyEnum {
   Crystallia = "Crystallia",
   DesertVortex = "DesertVortex",
 }
+
+export enum ColonyPathEnum {
+  Aquarium = "aquarion.cry1s.ru",
+  GreenLabyrinth = "greenlab.cry1s.ru",
+  Terramorf = "terramorf.cry1s.ru",
+  Crystallia = "authatom.cry1s.ru",
+  DesertVortex = "dustwind.cry1s.ru",
+}

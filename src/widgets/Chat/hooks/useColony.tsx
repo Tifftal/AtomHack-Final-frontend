@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useCallback, useEffect, useState } from "react";
-import { ColonyEnum, IOption } from "../../../utils/types";
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  ColonyEnum,
+  ColonyPathEnum,
+  IMessage,
+  IOption,
+} from "../../../utils/types";
 
 import Stomp from "stompjs";
-import SockJS from "sockjs-client";
 
 export const useColony = () => {
   const [colony, setColony] = useState<IOption<ColonyEnum>>();
@@ -34,13 +38,11 @@ export const useColony = () => {
     []
   );
 
-  /* const stompClient = useRef<Client | null>(null); */
-  const [stompClient, setStompClient] = useState<Stomp.Client>();
+  const stompClient = useRef<Stomp.Client | null>(null);
 
   const onConnected = () => {
-    // подключаемся)))
     console.log("WS connected");
-    stompClient?.subscribe("/chatroom/public", onMessage);
+    stompClient.current?.subscribe("/chatroom/public", onMessage);
   };
 
   const onDisconnect = () => {
@@ -50,28 +52,14 @@ export const useColony = () => {
   const onMessage = (message: Stomp.Message) => {
     console.log(message.body);
   };
-  /* 
-  const sendMessage = () => {
-    // угадай по названию
-    if (stompClient.current !== null) {
-      if (currentMessage.trim() !== "") {
-        const newDate = new Date();
-        const newMessage = {
-          username: myName,
-          message: currentMessage.trim(),
-          date: newDate.toLocaleString(),
-        };
-        stompClient.current.send(
-          "/app/message",
-          {},
-          JSON.stringify(newMessage)
-        );
-        setCurrentMessage("");
-      }
-    }
-  }; */
 
-  /* const chatMessages = (payload) => {
+  // todo
+  const sendMessage = (message: IMessage) => {
+    if (!stompClient.current) return;
+    stompClient.current.send("/app/message", {}, JSON.stringify(message));
+  };
+
+  /*  const chatMessages = (payload) => {
     // слушаем сервер и добавляем в chatHistory
     console.log(payload);
     const payloadData = JSON.parse(payload.body);
@@ -88,31 +76,28 @@ export const useColony = () => {
 
   const onError = () => {
     console.log("WS error");
-    setStompClient(undefined);
+    stompClient.current = null;
+  };
+
+  const createConnection = async () => {
+    if (!colony || colony.value === ColonyEnum.Terramorf) return;
+
+    const socket = new window.SockJS(
+      `http://${ColonyPathEnum[colony.value]}/api/ws`
+    );
+    const stomp = Stomp.over(socket);
+    stompClient.current = stomp;
+
+    stomp.connect({}, onConnected, onError);
   };
 
   useEffect(() => {
-    if (!colony) return;
-    console.log("sldkvnsdv", colony);
+    createConnection();
 
-    const socket = new window.SockJS("http://localhost:8082/api/ws");
-    const stomp = Stomp.over(socket);
-    setStompClient(stomp);
-
-    stomp.connect({}, () => {
-      console.log("WebSocket connected");
-      stomp.subscribe(
-        "/topic/commands/4",
-        (message) => {
-          console.log(JSON.parse(message.body));
-        },
-        onError
-      );
-    });
-    /* getHistoryOfChat(); */ // первичная загрузка сообщений (не помню)
     return () => {
-      stompClient && stompClient.disconnect(onDisconnect);
+      stompClient.current && stompClient.current.disconnect(onDisconnect);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colony]);
 
   return {
