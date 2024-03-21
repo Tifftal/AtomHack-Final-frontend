@@ -63,6 +63,10 @@
         },
         "chatbtn": {
             "title": "Support"
+        },
+        "chat": {
+            "colony": "Select a colony",
+            "message": "Enter your message"
         }
     }
 }

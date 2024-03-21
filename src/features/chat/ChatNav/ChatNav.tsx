@@ -1,12 +1,15 @@
 import styles from "./ChatNav.module.scss";
-import { IconBuildingCommunity, IconX } from "@tabler/icons-react";
-import { ActionIcon, Box, Select } from "@mantine/core";
+import { IconBuildingCommunity, IconX, IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
+import { ActionIcon, Group, Box, Select } from "@mantine/core";
 import { FC } from "react";
-import { IChatNavProps } from "./ChatNav.types";
+import { ChatNavProps } from "./ChatNav.types";
 import { ColonyEnum, IOption } from "../../../utils/types";
+import { useTranslation } from "react-i18next";
 
-export const ChatNav: FC<IChatNavProps> = (props) => {
-  const { colonies, colony, handleSetColony, toggleReport } = props;
+export const ChatNav: FC<ChatNavProps> = (props) => {
+  const { t } = useTranslation();
+  const { colonies, colony, handleSetColony, toggleReport, setScreen, isFull } = props;
+
   return (
     <Box bg={colony ? colony.value : 'Crystallia'} className={styles.root}>
       <Select
@@ -16,7 +19,7 @@ export const ChatNav: FC<IChatNavProps> = (props) => {
             <IconBuildingCommunity />
           </ActionIcon>}
         className={styles.select}
-        placeholder="Выберите колонию"
+        placeholder={t("chat.colony")}
         value={colony ? colony.value : null}
         onChange={(_value, option) => {
           handleSetColony(option as IOption<ColonyEnum>);
@@ -24,14 +27,28 @@ export const ChatNav: FC<IChatNavProps> = (props) => {
         }}
         data={colonies}
       />
-      <ActionIcon
-        variant="subtle"
-        aria-label="Settings"
-        onClick={() => toggleReport(false)}
-        color="white"
-      >
-        <IconX style={{ width: '80%', height: '80%' }} stroke={2} />
-      </ActionIcon>
+
+      <Group>
+        <ActionIcon
+          variant="subtle"
+          aria-label="Settings"
+          onClick={() => setScreen()}
+          color="grape.9"
+        >
+          {
+            isFull ? <IconArrowsMinimize size={"18"} /> : <IconArrowsMaximize size={"18"} />
+          }
+        </ActionIcon>
+        <ActionIcon
+          variant="subtle"
+          aria-label="Settings"
+          onClick={() => toggleReport(false)}
+          color="grape.9"
+        >
+          <IconX style={{ width: '80%', height: '80%' }} stroke={2} />
+        </ActionIcon>
+      </Group>
+    </div>
     </Box>
   );
 };

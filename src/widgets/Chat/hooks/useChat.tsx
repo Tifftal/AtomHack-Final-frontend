@@ -4,7 +4,7 @@ import { IChatFooterProps } from "../../../features/chat/ChatFooter/ChatFooter.t
 import { ICommand, IMessage } from "../../../utils/types";
 import { useFiles } from "./useFiles";
 import { useColony } from "./useColony";
-import { IChatNavProps } from "../../../features/chat/ChatNav/ChatNav.types";
+import { IChatNavHookProps } from "../../../features/chat/ChatNav/ChatNav.types";
 import { IChatProps } from "../types";
 
 const MESSAGES: IMessage[] = [
@@ -112,11 +112,12 @@ export const useChat = (props: IChatProps) => {
     },
   ];
 
-  const navProps: IChatNavProps = {
+  const navProps: IChatNavHookProps = {
     colonies,
     colony: colony,
     handleSetColony,
-    toggleReport
+    toggleReport,
+
   };
 
   const chatBlockProps: IChatBlockProps = {
