@@ -10,11 +10,16 @@ import { useState } from "react";
 import s from "./AuthForm.module.scss";
 import { useForm } from "@mantine/form";
 import { ValidateForm } from "./utils";
-import { register } from "../../../enteties/user/api";
+import { register, confirm, getUser } from "../../../enteties/user/api";
+import md5 from "md5";
+import { useNavigate } from "react-router-dom";
 
 const AuthForm = () => {
   const [active, setActive] = useState(0);
-
+  const [error, setError] = useState<string | null>(null);
+  const [codeError, setCodeError] = useState<string | null>(null);
+  const [userID, setUserID] = useState<string | null>(null);
+  const history = useNavigate();
   const form = useForm({
     initialValues: {
       name: "",
@@ -37,16 +42,42 @@ const AuthForm = () => {
       if (form.validate().hasErrors) {
         return current;
       }
-      if( current === 2 ){
-        console.log(form.values);
+      if (current === 1) {
         register({
           name: form.values.name,
           surname: form.values.surname,
           middlename: form.values.middlename,
           role: form.values.role,
           email: form.values.email,
-          password: form.values.password,
-        });
+          password: md5(form.values.password),
+        })
+          .then((response) => {
+            setError(null);
+            const data = response.body.id;
+            console.log(data);
+            setUserID(data);
+          })
+          .catch((error) => {
+            if (error.response.status === 409) {
+              setError("Уже есть аккаунт привязанный к этой почте");
+            }
+            setError("Произошла ошибка");
+            return;
+          });
+      }
+
+      if (current === 2) {
+        confirm({
+          code: form.values.code,
+          id: userID!,
+        })
+          .then(() => {
+            setCodeError(null);
+            history("/main"); 
+          })
+          .catch((error) => {
+            setCodeError("Произошла ошибка");
+          });
       }
       return current < 3 ? current + 1 : current;
     });
@@ -89,6 +120,7 @@ const AuthForm = () => {
           label="Второй шаг"
           description="Настройка данных аккаунта"
         >
+          <p className={s.error}>{error}</p>
           <TextInput
             mt="md"
             label="Email"
@@ -115,6 +147,7 @@ const AuthForm = () => {
           <h2>
             Код подтверждения отправлен на Вашу почту: {form.values.email}
           </h2>
+          <p className={s.error}>{codeError}</p>
           <TextInput
             label="Введите код подтверждения"
             placeholder="123456"

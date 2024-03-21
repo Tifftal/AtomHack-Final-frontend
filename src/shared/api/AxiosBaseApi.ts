@@ -3,5 +3,5 @@ import { AUTH_URL } from "../config";
 
 export const apiInstance = axios.create({
     baseURL: AUTH_URL,
-    // withCredentials: true
+    withCredentials: true
 });

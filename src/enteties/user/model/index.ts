@@ -22,6 +22,11 @@ export type UserModel = {
     role: string, 
 }
 
+export type ConfirmPair = {
+    id: string,
+    code: string
+}
+
 export const normalizeUser = (user: UserApi): UserModel => ({
     name: user.Name,
     surname: user.Surname,
@@ -30,3 +35,4 @@ export const normalizeUser = (user: UserApi): UserModel => ({
     password: user.Password,
     role: user.Role
 })
+
