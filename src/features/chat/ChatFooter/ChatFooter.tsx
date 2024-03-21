@@ -7,8 +7,10 @@ import { MenuCommand } from "../MenuCommand/MenuCommand";
 import { IChatFooterProps } from "./ChatFooter.types";
 import File from "../../../enteties/File";
 import { MAX_FILES_LENGTH } from "../../../widgets/Chat/hooks/useFiles";
+import { useTranslation } from "react-i18next";
 
 export const ChatFooter = (props: IChatFooterProps) => {
+  const { t } = useTranslation();
   const { commands, disabled, filesData, sendHandler, isBotChat } = props;
   const { handleUploadFiles, files, handleDeleteFile } = filesData;
 
@@ -54,7 +56,7 @@ export const ChatFooter = (props: IChatFooterProps) => {
           </div>
 
           <Textarea
-            placeholder="Введите сообщение"
+            placeholder={t("chat.message")}
             autosize
             disabled={disabled}
             minRows={1}
@@ -66,7 +68,7 @@ export const ChatFooter = (props: IChatFooterProps) => {
               disabled={disabled}
               variant="transparent"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              /* color={isMenuOpen ? "gray" : ""} */
+            /* color={isMenuOpen ? "gray" : ""} */
             >
               <IconCategory />
             </ActionIcon>

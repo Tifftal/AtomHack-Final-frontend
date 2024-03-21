@@ -1,3 +1,3 @@
-import { IChatNavProps } from "../../features/chat/ChatNav/ChatNav.types";
+import { IChatNavHookProps } from "../../features/chat/ChatNav/ChatNav.types";
 
-export interface IChatProps extends Pick<IChatNavProps, 'toggleReport'> { }
+export interface IChatProps extends Pick<IChatNavHookProps, 'toggleReport' | 'setDefault' | 'setFull'> { }
