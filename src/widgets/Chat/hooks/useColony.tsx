@@ -13,6 +13,7 @@ import Stomp from "stompjs";
 
 export const useColony = () => {
   const [colony, setColony] = useState<IOption<ColonyEnum>>();
+  const [isLoading, setIsloading] = useState(true);
   const prevColony = useRef<IOption<ColonyEnum> | null>(null);
   const sessionRef = useRef<string | null>(null);
 
@@ -92,7 +93,7 @@ export const useColony = () => {
       url,
       {
         fio: fio,
-      },
+      }
     );
     sessionRef.current = response.data.sessionId;
     return response.data.sessionId;
@@ -108,21 +109,30 @@ export const useColony = () => {
     return response.data.sessionId;
   };
 
+  const haltheChack = async () => {
+    await axios.get("")
+  }
+
   const createConnection = async () => {
     if (!colony || colony.value === ColonyEnum.Terramorf) return;
 
     if (stompClient.current) {
       if (!prevColony.current?.value || !sessionRef.current) return;
-      await closeSession(prevColony.current.value, sessionRef.current);
+      await closeSession(
+        `https://${ColonyPathEnum[prevColony.current.value]}/api/session/close`,
+        sessionRef.current
+      );
+      await stompClient.current.disconnect(onDisconnect);
     }
 
     const session = await openSession(
-      `http://${ColonyPathEnum[colony.value]}/session/open`,
+      /* `http://${ColonyPathEnum[colony.value]}/api/session/open`, */
+      `https://${ColonyPathEnum[colony.value]}/api/session/open`,
       "kabanets vladimir" // todo
     );
 
     const socket = new window.SockJS(
-      `http://${ColonyPathEnum[colony.value]}/topic/events/${session}`
+      `https://${ColonyPathEnum[colony.value]}/api/ws`
     );
     const stomp = Stomp.over(socket);
     stompClient.current = stomp;
@@ -130,8 +140,17 @@ export const useColony = () => {
     stomp.connect({}, onConnected, onError);
   };
 
+  const changeColony = async () => {
+    setIsloading(true);
+    await createConnection();
+
+    await haltheChack();
+
+    setIsloading(false);
+  };
+
   useEffect(() => {
-    createConnection();
+    changeColony();
 
     return () => {
       stompClient.current && stompClient.current.disconnect(onDisconnect);
@@ -143,5 +162,6 @@ export const useColony = () => {
     colony,
     handleSetColony,
     colonies,
+    isLoading,
   };
 };

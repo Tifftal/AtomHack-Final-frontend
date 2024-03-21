@@ -60,7 +60,7 @@ export const useChat = (props: IChatProps) => {
 
   const { handleDeleteFile, handleUploadFiles, files, clearFiles } = useFiles();
 
-  const { colony, handleSetColony, colonies } = useColony();
+  const { colony, handleSetColony, colonies, isLoading } = useColony();
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSendClick = useCallback(() => {
@@ -132,7 +132,7 @@ export const useChat = (props: IChatProps) => {
       handleUploadFiles,
       files,
     },
-    disabled: !!additionalCommandMessage,
+    disabled: !!additionalCommandMessage || isLoading,
     sendHandler: handleSendClick,
     isBotChat: false, // todo
   };
