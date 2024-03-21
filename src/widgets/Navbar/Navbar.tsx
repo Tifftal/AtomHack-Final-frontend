@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useEffect, useState } from 'react';
 import { TranslateMessage } from '../../shared/TranslateMessage/TranslateMessage';
+import { logout } from '../../enteties/user/api';
 
 const Navbar = () => {
     const { t, i18n } = useTranslation();
@@ -32,6 +33,12 @@ const Navbar = () => {
                 break;
         }
     }
+    const handleOut = () => {
+        logout()
+        .then(() => {
+            navigate("/auth")
+        })
+    }
 
     return (
         <div className={s.navbar}>
@@ -40,10 +47,10 @@ const Navbar = () => {
             </div>
             <div className={s.profilebtn}>
                 <h2>Talankina Varvara</h2>
-                <Button variant='outline' classNames={{ label: s.label }} onClick={() => navigate('/')}>{t("navbar.log-out-btn")}</Button>
+                <Button variant='outline' classNames={{ label: s.label }} onClick={handleOut}>{t("navbar.log-out-btn")}</Button>
             </div>
         </div>
-    )
+        )
 }
 
 export default Navbar;
