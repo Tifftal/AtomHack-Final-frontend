@@ -5,6 +5,7 @@ export interface ICommand {
 }
 
 export interface IMessage {
+  colony?: IOption<ColonyEnum>
   isUserMessage?: boolean;
   time: string;
   content: string | ICommand[];

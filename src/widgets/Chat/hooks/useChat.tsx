@@ -7,7 +7,7 @@ import { useColony } from "./useColony";
 import { IChatNavProps } from "../../../features/chat/ChatNav/ChatNav.types";
 import { IChatProps } from "../types";
 
-/* const MESSAGES: IMessage[] = [
+const MESSAGES: IMessage[] = [
   { content: "svvffv", isUserMessage: true, time: "svfs" },
   { content: "svdvkldmflvdfvffv", isUserMessage: true, time: "svfs" },
   { content: "kmfvlkdmfvlkdfvlksdgblk", isUserMessage: true, time: "svfs" },
@@ -50,7 +50,7 @@ import { IChatProps } from "../types";
     time: "svfs",
   },
   { content: "svvffv", isUserMessage: true, time: "svfs" },
-]; */
+];
 
 export const useChat = (props: IChatProps) => {
   const { toggleReport } = props
@@ -120,7 +120,8 @@ export const useChat = (props: IChatProps) => {
   };
 
   const chatBlockProps: IChatBlockProps = {
-    messages: messages.concat(additionalCommandMessage || []),
+    messages: MESSAGES.concat(additionalCommandMessage || []),
+    colony: colony,
   };
 
   const footerProps: IChatFooterProps = {
