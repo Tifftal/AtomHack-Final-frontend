@@ -11,7 +11,6 @@ export const Message: FC<IMessage> = (props) => {
   if (Array.isArray(content))
     return (
       <Box>
-
         <div className={styles.root}>
           <div
             className={cx(

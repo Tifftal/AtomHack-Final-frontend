@@ -36,7 +36,7 @@ export const ChatNav: FC<ChatNavProps> = (props) => {
           color="grape.9"
         >
           {
-            isFull ? <IconArrowsMinimize size={"18"} /> : <IconArrowsMaximize size={"18"} />
+            isFull ? <IconArrowsMinimize size={"18"} color="white" /> : <IconArrowsMaximize size={"18"} color="white"/>
           }
         </ActionIcon>
         <ActionIcon
@@ -45,10 +45,9 @@ export const ChatNav: FC<ChatNavProps> = (props) => {
           onClick={() => toggleReport(false)}
           color="grape.9"
         >
-          <IconX style={{ width: '80%', height: '80%' }} stroke={2} />
+          <IconX style={{ width: '80%', height: '80%' }} stroke={2} color="white" />
         </ActionIcon>
       </Group>
-    </div>
     </Box>
   );
 };
