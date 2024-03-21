@@ -53,14 +53,16 @@ const MESSAGES: IMessage[] = [
 ];
 
 export const useChat = (props: IChatProps) => {
-  const { toggleReport } = props
+  const { toggleReport } = props;
   const [messages] = useState<IMessage[]>([]);
   const [additionalCommandMessage, setAdditionalCommandMessage] =
     useState<IMessage>();
 
   const { handleDeleteFile, handleUploadFiles, files, clearFiles } = useFiles();
 
-  const { colony, handleSetColony, colonies, isLoading } = useColony();
+  const { colony, handleSetColony, colonies, isLoading, actions } = useColony(
+    setAdditionalCommandMessage
+  );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSendClick = useCallback(() => {
@@ -69,11 +71,11 @@ export const useChat = (props: IChatProps) => {
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const commandActionWrapper = useCallback(
-    (action: () => void) => {
+    (action?: () => void) => {
       if (additionalCommandMessage) {
         setAdditionalCommandMessage(undefined);
       }
-      action();
+      action ? action() : null;
     },
     [additionalCommandMessage]
   );
@@ -89,26 +91,28 @@ export const useChat = (props: IChatProps) => {
 
   const commands: ICommand[] = [
     {
-      label: "Начать",
-      action: () => setCommandMessage([{ label: "stop", action: () => { } }]),
+      label: "access",
+      action: () =>
+        commandActionWrapper(actions ? actions[0].action : () => {}),
+      disabled: actions ? !actions[0].active : true,
     },
     {
-      label: "Закончить",
-      action: () => { },
+      label: "managemenet",
+      action: () =>
+        commandActionWrapper(actions ? actions[1].action : () => {}),
+      disabled: actions ? !actions[1].active : true,
     },
     {
-      label: "тык",
-      action: () => {
-        alert("ljnskjn");
-      },
+      label: "message_to_ai",
+      action: () =>
+        commandActionWrapper(actions ? actions[2].action : () => {}),
+      disabled: actions ? !actions[2].active : true,
     },
     {
-      label: "Много букв аааааа",
-      action: () => { },
-    },
-    {
-      label: "Много букв аааааа",
-      action: () => { },
+      label: "send_to_support",
+      action: () =>
+        commandActionWrapper(actions ? actions[3].action : () => {}),
+      disabled: actions ? !actions[3].active : true,
     },
   ];
 

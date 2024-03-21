@@ -1,6 +1,6 @@
 export interface ICommand {
   label: string;
-  action: () => void;
+  action?: () => void;
   disabled?: boolean;
 }
 
@@ -48,11 +48,19 @@ export interface ISessionDataClose {
   timestamp: string;
   sessionId: string;
 }
+export type sysType = "IMS 3.0" | "IMS 4.0" | "MDP 2.0" | "UTS";
+export interface ISystemsData {
+  systems: sysType[];
+}
 
 export interface ISessionDataOpen {
   timestamp: string;
   sessionId: string;
   pattern: "OPEN_SESSION";
+}
+
+export interface IManageData {
+  url: string;
 }
 
 export interface IHeltheData {

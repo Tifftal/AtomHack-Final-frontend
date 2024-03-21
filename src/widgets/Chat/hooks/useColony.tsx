@@ -1,21 +1,41 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import {
   ColonyEnum,
   ColonyPathEnum,
+  ICommand,
+  IHeltheData,
+  IManageData,
   IMessage,
   IOption,
   ISessionDataClose,
   ISessionDataOpen,
+  ISystemsData,
 } from "../../../utils/types";
 import axios, { AxiosResponse } from "axios";
 import Stomp from "stompjs";
 
-export const useColony = () => {
+export const useColony = (
+  setAdditionalCommandMessage: Dispatch<SetStateAction<IMessage | undefined>>
+) => {
   const [colony, setColony] = useState<IOption<ColonyEnum>>();
+  const [actions, setActions] = useState<
+    {
+      active: boolean;
+      action?: () => Promise<void>;
+    }[]
+  >();
   const [isLoading, setIsloading] = useState(true);
   const prevColony = useRef<IOption<ColonyEnum> | null>(null);
   const sessionRef = useRef<string | null>(null);
+  const isAccessOrManage = useRef<string | null>(null);
 
   const colonies: IOption[] = [
     {
@@ -110,8 +130,12 @@ export const useColony = () => {
   };
 
   const haltheChack = async () => {
-    await axios.get("")
-  }
+    if (!colony) return;
+    const response = await axios.get<unknown, IHeltheData>(
+      `https://${ColonyPathEnum[colony.value]}/api/session/open`
+    );
+    return response;
+  };
 
   const createConnection = async () => {
     if (!colony || colony.value === ColonyEnum.Terramorf) return;
@@ -144,7 +168,22 @@ export const useColony = () => {
     setIsloading(true);
     await createConnection();
 
-    await haltheChack();
+    const data = await haltheChack();
+    if (data) {
+      setActions([
+        { active: data.access === "OK", action: accessHandler },
+        { active: data.management === "OK", action: managmentHandler },
+        { active: data.mlServer === "OK", action: undefined },
+        { active: data.mailServer === "OK", action: undefined },
+      ]);
+    } else {
+      setActions([
+        { active: false, action: undefined },
+        { active: false, action: undefined },
+        { active: false, action: undefined },
+        { active: false, action: undefined },
+      ]);
+    }
 
     setIsloading(false);
   };
@@ -158,10 +197,89 @@ export const useColony = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colony]);
 
+  /*  */
+
+  async function getSystems() {
+    if (!colony) return;
+    const response = await axios.post<unknown, ISystemsData>(
+      `https://${ColonyPathEnum[colony.value]}/systems`
+    );
+    response.systems.map((sys) => {
+      switch (sys) {
+        case "IMS 3.0":
+          return "IMS_3";
+        case "IMS 4.0":
+          return "IMS_4";
+        case "MDP 2.0":
+          return "MDP_2";
+        case "UTS":
+          return "UTS";
+      }
+    });
+    return response.systems as string[];
+  }
+
+  async function getManage() {
+    if (!colony) return;
+    return axios.get<unknown, IManageData>(
+      `https://${ColonyPathEnum[colony.value]}/management`
+    );
+  }
+
+  async function getAccess() {
+    if (!colony) return;
+    return axios.get<unknown, IManageData>(
+      `https://${ColonyPathEnum[colony.value]}/access`
+    );
+  }
+
+  async function accessHandler() {
+    const systems = await getSystems();
+    if (!systems) return;
+    isAccessOrManage.current === "access";
+    const commands: ICommand[] = systems.map((sys) => ({
+      action: systemsHandler,
+      label: sys,
+    }));
+    setAdditionalCommandMessage({ content: commands, time: "sdcd" });
+  }
+
+  async function managmentHandler() {
+    const systems = await getSystems();
+    if (!systems) return;
+    isAccessOrManage.current === "manage";
+    const commands: ICommand[] = systems.map((sys) => ({
+      action: () => {},
+      label: sys,
+    }));
+    setAdditionalCommandMessage({ content: commands, time: "sdcd" });
+  }
+
+  async function systemsHandler() {
+    if (isAccessOrManage.current === "manage") {
+      const data = await getManage();
+      if (data) {
+        const { url } = data;
+        console.log(url);
+      }
+    } else {
+      const data = await getAccess();
+      if (data) {
+        const { url } = data;
+        console.log(url);
+      }
+    }
+  }
+
+  /*  */
+
+  /*  */
+
   return {
     colony,
     handleSetColony,
     colonies,
     isLoading,
+    actions,
   };
 };
