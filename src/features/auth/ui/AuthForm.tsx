@@ -80,7 +80,7 @@ const AuthForm = () => {
             setCodeError(null);
             history("/"); 
           })
-          .catch((error) => {
+          .catch(() => {
             setCodeError("Произошла ошибка");
           });
       }
