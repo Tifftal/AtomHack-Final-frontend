@@ -11,7 +11,7 @@ import { useTranslation } from "react-i18next";
 
 export const ChatFooter = (props: IChatFooterProps) => {
   const { t } = useTranslation();
-  const { commands, disabled, filesData, sendHandler, isBotChat } = props;
+  const { commands, disabled, filesData, sendHandler, isBotChat, setMessage } = props;
   const { handleUploadFiles, files, handleDeleteFile } = filesData;
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,6 +59,7 @@ export const ChatFooter = (props: IChatFooterProps) => {
             placeholder={t("chat.message")}
             autosize
             disabled={disabled}
+            onChange={(event) => setMessage(event.target.value)}
             minRows={1}
             maxRows={4}
             className={styles["input-area"]}

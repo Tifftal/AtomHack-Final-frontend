@@ -5,6 +5,7 @@ export interface ICommand {
 }
 
 export interface IMessage {
+  isHref?: boolean;
   colony?: IOption<ColonyEnum>
   isUserMessage?: boolean;
   time: string;

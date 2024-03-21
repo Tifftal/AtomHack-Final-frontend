@@ -54,14 +54,21 @@ const MESSAGES: IMessage[] = [
 
 export const useChat = (props: IChatProps) => {
   const { toggleReport } = props;
-  const [messages] = useState<IMessage[]>([]);
+  const [messages, setMessages] = useState<IMessage[]>([]);
+  const [curMes, setCurMes] = useState('')
   const [additionalCommandMessage, setAdditionalCommandMessage] =
     useState<IMessage>();
 
+  const addMessage = (message: IMessage) => {
+    setAdditionalCommandMessage(undefined);
+    setMessages((prev) => prev.concat(message));
+  };
   const { handleDeleteFile, handleUploadFiles, files, clearFiles } = useFiles();
 
   const { colony, handleSetColony, colonies, isLoading, actions } = useColony(
-    setAdditionalCommandMessage
+    setAdditionalCommandMessage,
+    addMessage,
+    curMes
   );
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -91,25 +98,25 @@ export const useChat = (props: IChatProps) => {
 
   const commands: ICommand[] = [
     {
-      label: "access",
+      label: "Доступ",
       action: () =>
         commandActionWrapper(actions ? actions[0].action : () => {}),
       disabled: actions ? !actions[0].active : true,
     },
     {
-      label: "managemenet",
+      label: "Управление",
       action: () =>
         commandActionWrapper(actions ? actions[1].action : () => {}),
       disabled: actions ? !actions[1].active : true,
     },
     {
-      label: "message_to_ai",
+      label: "Сообщение чату",
       action: () =>
         commandActionWrapper(actions ? actions[2].action : () => {}),
       disabled: actions ? !actions[2].active : true,
     },
     {
-      label: "send_to_support",
+      label: "Сообщение в поддержку",
       action: () =>
         commandActionWrapper(actions ? actions[3].action : () => {}),
       disabled: actions ? !actions[3].active : true,
@@ -121,16 +128,16 @@ export const useChat = (props: IChatProps) => {
     colony: colony,
     handleSetColony,
     toggleReport,
-
   };
 
   const chatBlockProps: IChatBlockProps = {
-    messages: MESSAGES.concat(additionalCommandMessage || []),
+    messages: messages.concat(additionalCommandMessage || []),
     colony: colony,
   };
 
   const footerProps: IChatFooterProps = {
     commands: commands,
+    setMessage: setCurMes,
     filesData: {
       handleDeleteFile,
       handleUploadFiles,

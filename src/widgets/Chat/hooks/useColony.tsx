@@ -18,12 +18,15 @@ import {
   ISessionDataClose,
   ISessionDataOpen,
   ISystemsData,
+  sysType,
 } from "../../../utils/types";
 import axios, { AxiosResponse } from "axios";
 import Stomp from "stompjs";
 
 export const useColony = (
-  setAdditionalCommandMessage: Dispatch<SetStateAction<IMessage | undefined>>
+  setAdditionalCommandMessage: Dispatch<SetStateAction<IMessage | undefined>>,
+  addMessage: (m: IMessage) => void,
+  message: string
 ) => {
   const [colony, setColony] = useState<IOption<ColonyEnum>>();
   const [actions, setActions] = useState<
@@ -71,7 +74,10 @@ export const useColony = (
 
   const onConnected = () => {
     console.log("WS connected");
-    stompClient.current?.subscribe("/chatroom/public", onMessage);
+    stompClient.current?.subscribe(
+      `/topic/events/${sessionRef.current}`,
+      onMessage
+    );
   };
 
   const onDisconnect = () => {
@@ -79,7 +85,15 @@ export const useColony = (
   };
 
   const onMessage = (message: Stomp.Message) => {
-    console.log(message.body);
+    // @ts-ignore
+    console.log(message);
+    const parsed = JSON.parse(message.body);
+
+    addMessage({
+      content: parsed.message,
+      time: "sv",
+      // isHref: false,
+    } as IMessage);
   };
 
   // todo
@@ -112,7 +126,7 @@ export const useColony = (
     const response = await axios.post<unknown, AxiosResponse<ISessionDataOpen>>(
       url,
       {
-        fio: fio,
+        fio: "Ayushiev Timur Olegovich",
       }
     );
     sessionRef.current = response.data.sessionId;
@@ -131,8 +145,8 @@ export const useColony = (
 
   const haltheChack = async () => {
     if (!colony) return;
-    const response = await axios.get<unknown, IHeltheData>(
-      `https://${ColonyPathEnum[colony.value]}/api/session/open`
+    const response = await axios.get(
+      `https://${ColonyPathEnum[colony.value]}/api/health-check/servers`
     );
     return response;
   };
@@ -168,12 +182,14 @@ export const useColony = (
     setIsloading(true);
     await createConnection();
 
-    const data = await haltheChack();
+    // @ts-ignore
+    const { data } = await haltheChack();
+    console.log(data);
     if (data) {
       setActions([
         { active: data.access === "OK", action: accessHandler },
         { active: data.management === "OK", action: managmentHandler },
-        { active: data.mlServer === "OK", action: undefined },
+        { active: data.mlServer === "OK", action: () => sendToMl(message) },
         { active: data.mailServer === "OK", action: undefined },
       ]);
     } else {
@@ -197,14 +213,14 @@ export const useColony = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [colony]);
 
-  /*  */
-
   async function getSystems() {
     if (!colony) return;
-    const response = await axios.post<unknown, ISystemsData>(
-      `https://${ColonyPathEnum[colony.value]}/systems`
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const response: any = await axios.post<unknown, ISystemsData>(
+      `https://${ColonyPathEnum[colony.value]}/api/systems`
     );
-    response.systems.map((sys) => {
+    console.log(response.data);
+    const newArr = response.data.systems.map((sys: sysType) => {
       switch (sys) {
         case "IMS 3.0":
           return "IMS_3";
@@ -216,59 +232,79 @@ export const useColony = (
           return "UTS";
       }
     });
-    return response.systems as string[];
+    console.log(newArr);
+    return newArr;
   }
 
-  async function getManage() {
+  async function getManage(system: string) {
     if (!colony) return;
     return axios.get<unknown, IManageData>(
-      `https://${ColonyPathEnum[colony.value]}/management`
+      `https://{ColonyPathEnum[colony.value]}/api/management?system=${system}&sessionId=${sessionRef.current}`
     );
   }
 
-  async function getAccess() {
+  async function getAccess(system: string) {
     if (!colony) return;
     return axios.get<unknown, IManageData>(
-      `https://${ColonyPathEnum[colony.value]}/access`
+      `https://${
+        ColonyPathEnum[colony.value]
+      }/api/access?system=${system}&sessionId=${sessionRef.current}`
     );
   }
 
   async function accessHandler() {
-    const systems = await getSystems();
+    const systems: string[] = await getSystems();
     if (!systems) return;
     isAccessOrManage.current === "access";
     const commands: ICommand[] = systems.map((sys) => ({
-      action: systemsHandler,
+      action: () => systemsHandler(sys),
       label: sys,
     }));
     setAdditionalCommandMessage({ content: commands, time: "sdcd" });
   }
 
   async function managmentHandler() {
-    const systems = await getSystems();
+    const systems: string[] = await getSystems();
     if (!systems) return;
     isAccessOrManage.current === "manage";
     const commands: ICommand[] = systems.map((sys) => ({
-      action: () => {},
+      action: () => systemsHandler(sys),
       label: sys,
     }));
     setAdditionalCommandMessage({ content: commands, time: "sdcd" });
   }
 
-  async function systemsHandler() {
+  async function systemsHandler(system: string) {
     if (isAccessOrManage.current === "manage") {
-      const data = await getManage();
+      // @ts-ignore
+      const { data } = await getManage(system);
       if (data) {
         const { url } = data;
         console.log(url);
       }
     } else {
-      const data = await getAccess();
+      // @ts-ignore
+      const { data }: any = await getAccess(system);
       if (data) {
         const { url } = data;
-        console.log(url);
+        addMessage({ content: url, time: "sv", isHref: true } as IMessage);
       }
     }
+  }
+
+  async function sendToMl(message: string) {
+    if (!colony) {
+      return;
+    }
+    // @ts-ignore
+    const { data } = await axios.post(
+      `https://${ColonyPathEnum[colony.value]}/api/send-to-ml?sessionId=${
+        sessionRef.current
+      }`,
+      {
+        message: message + "dvd",
+      }
+    );
   }
 
   /*  */
