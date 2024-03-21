@@ -8,12 +8,14 @@ import { theme } from './ThemeProvider';
 import MainPage from '../pages/MainPage/MainPage';
 import Navbar from '../widgets/Navbar/Navbar';
 import NotFound from '../pages/NotFound/NotFound';
+import ChatBtn from '../enteties/ChatBtn/ChatBtn';
 
 function App() {
   return (
     <MantineProvider theme={theme}>
       <BrowserRouter>
         <Navbar />
+        <ChatBtn />
         <Routes>
           <Route path='/auth' element={<Auth />} />
           <Route path='/registration' element={<Registration />} />
