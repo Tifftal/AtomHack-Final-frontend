@@ -18,12 +18,12 @@ function App() {
   return (
     <MantineProvider theme={theme}>
       <BrowserRouter>
-        <Navbar />
+        {/* <Navbar /> */}
         {!isDraftOpen && <ChatBtn setOpen={setIsDraftOpen}/>}
         {isDraftOpen && <Chat toggleReport={setIsDraftOpen} />}
         <Routes>
-          <Route path='/auth' element={<Auth />} />
-          <Route path='/registration' element={<Registration />} />
+          {/* <Route path='/auth' element={<Auth />} /> */}
+          {/* <Route path='/registration' element={<Registration />} /> */}
           <Route path='/' element={<MainPage />} />
           <Route path='*' element={<NotFound />} />
         </Routes>
