@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import s from './MainPage.module.scss';
 import { useTranslation } from 'react-i18next';
-import { ActionIcon, Button } from '@mantine/core';
+import { Button } from '@mantine/core';
 import { IconPointerPlus, IconPointerMinus } from "@tabler/icons-react";
 
 const MainPage = () => {
@@ -55,7 +55,7 @@ const MainPage = () => {
                     <div className={s.blurredBackground}>
                         <div className={s.first}>
                             <h1>{t("main.title")}</h1>
-                            <Button size="xs" onClick={toggleBackground}>{backgroundActive ? <IconPointerMinus /> : <IconPointerPlus />}</Button>
+                            <Button variant='default' color='white' size="xs" onClick={toggleBackground}>{backgroundActive ? <IconPointerMinus /> : <IconPointerPlus />}</Button>
                         </div>
                         <div className={s.second}>
                             <p>{t("main.text1")}</p>
