@@ -1,6 +1,6 @@
 import styles from "./ChatNav.module.scss";
-import { IconBuildingCommunity } from "@tabler/icons-react";
-import { ActionIcon, Button, Select } from "@mantine/core";
+import { IconBuildingCommunity, IconX } from "@tabler/icons-react";
+import { ActionIcon, Select } from "@mantine/core";
 import { FC } from "react";
 import { IChatNavProps } from "./ChatNav.types";
 import { ColonyEnum, IOption } from "../../../utils/types";
@@ -23,7 +23,14 @@ export const ChatNav: FC<IChatNavProps> = (props) => {
         }}
         data={colonies}
       />
-      <Button onClick={() => toggleReport(false)}>CLOSE</Button>
+      <ActionIcon
+        variant="subtle"
+        aria-label="Settings"
+        onClick={() => toggleReport(false)}
+        color="grape.9"
+      >
+        <IconX style={{ width: '80%', height: '80%' }} stroke={2} />
+      </ActionIcon>
     </div>
   );
 };
