@@ -1,5 +1,20 @@
 .page {
-    height: 100vh;
+    height: 100%;
     display: grid;
     grid-template-rows: auto 1fr auto;
+    z-index: 9999;
+}
+
+.chatdialog {
+    height: 100vh;
+    width: 100vw;
+}
+
+.root {
+    width: 95vw;
+    height: 95vh;
+    max-width: 95vw;
+    box-shadow: 0px 0px 200px black;
+    padding: 0 !important;
+    border-radius: 10px;
 }

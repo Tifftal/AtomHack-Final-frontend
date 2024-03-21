@@ -6,7 +6,7 @@ import { IChatNavProps } from "./ChatNav.types";
 import { ColonyEnum, IOption } from "../../../utils/types";
 
 export const ChatNav: FC<IChatNavProps> = (props) => {
-  const { colonies, colony, handleSetColony } = props;
+  const { colonies, colony, handleSetColony, toggleReport } = props;
   return (
     <div className={styles.root}>
       <Select
@@ -23,6 +23,7 @@ export const ChatNav: FC<IChatNavProps> = (props) => {
         }}
         data={colonies}
       />
+      <Button onClick={() => toggleReport(false)}>CLOSE</Button>
     </div>
   );
 };

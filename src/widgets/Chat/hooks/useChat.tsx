@@ -5,6 +5,7 @@ import { ICommand, IMessage } from "../../../utils/types";
 import { useFiles } from "./useFiles";
 import { useColony } from "./useColony";
 import { IChatNavProps } from "../../../features/chat/ChatNav/ChatNav.types";
+import { IChatProps } from "../types";
 
 /* const MESSAGES: IMessage[] = [
   { content: "svvffv", isUserMessage: true, time: "svfs" },
@@ -51,7 +52,8 @@ import { IChatNavProps } from "../../../features/chat/ChatNav/ChatNav.types";
   { content: "svvffv", isUserMessage: true, time: "svfs" },
 ]; */
 
-export const useChat = () => {
+export const useChat = (props: IChatProps) => {
+  const { toggleReport } = props
   const [messages] = useState<IMessage[]>([]);
   const [additionalCommandMessage, setAdditionalCommandMessage] =
     useState<IMessage>();
@@ -114,6 +116,7 @@ export const useChat = () => {
     colonies,
     colony: colony,
     handleSetColony,
+    toggleReport
   };
 
   const chatBlockProps: IChatBlockProps = {

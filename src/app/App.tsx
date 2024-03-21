@@ -8,16 +8,20 @@ import { theme } from './ThemeProvider';
 import MainPage from '../pages/MainPage/MainPage';
 import Navbar from '../widgets/Navbar/Navbar';
 import NotFound from '../pages/NotFound/NotFound';
-import ChatBtn from '../enteties/ChatBtn/ChatBtn';
 import { Chat } from '../widgets/Chat/Chat';
+import { useState } from 'react';
+import ChatBtn from '../enteties/ChatBtn/ChatBtn';
 
 
 function App() {
+  const [isDraftOpen, setIsDraftOpen] = useState(false);
+
   return (
     <MantineProvider theme={theme}>
       <BrowserRouter>
         <Navbar />
-        <ChatBtn />
+        {!isDraftOpen && <ChatBtn setOpen={setIsDraftOpen}/>}
+        {isDraftOpen && <Chat toggleReport={setIsDraftOpen} />}
         <Routes>
           <Route path='/auth' element={<Auth />} />
           <Route path='/registration' element={<Registration />} />
