@@ -88,11 +88,11 @@ export const useChat = () => {
   const commands: ICommand[] = [
     {
       label: "Начать",
-      action: () => setCommandMessage([{ label: "stop", action: () => {} }]),
+      action: () => setCommandMessage([{ label: "stop", action: () => { } }]),
     },
     {
       label: "Закончить",
-      action: () => {},
+      action: () => { },
     },
     {
       label: "тык",
@@ -102,11 +102,11 @@ export const useChat = () => {
     },
     {
       label: "Много букв аааааа",
-      action: () => {},
+      action: () => { },
     },
     {
       label: "Много букв аааааа",
-      action: () => {},
+      action: () => { },
     },
   ];
 

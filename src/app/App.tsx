@@ -18,9 +18,9 @@ function App() {
         <Routes>
           <Route path='/auth' element={<Auth />} />
           <Route path='/registration' element={<Registration />} />
+          <Route path='/chat' element={<Chat />} />
           <Route path='/' element={<MainPage />} />
           <Route path='*' element={<NotFound />} />
-          <Route path='/chat' element={<Chat />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>

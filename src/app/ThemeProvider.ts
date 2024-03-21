@@ -62,12 +62,12 @@ export const redTheme: MantineColorsTuple = [
 ];
 
 export const theme = createTheme({
-  primaryColor: 'grape',
+  primaryColor: 'Crystallia',
   colors: {
-    'green': greenTheme,
-    'grape': grapeTheme,
-    'orange': orangeTheme,
-    'indigo': indigoTheme,
-    'red': redTheme,
+    'GreenLabyrinth': greenTheme,
+    'Crystallia': grapeTheme,
+    'DesertVortex': orangeTheme,
+    'Aquarium': indigoTheme,
+    'Terramorf': redTheme,
   }
 });
