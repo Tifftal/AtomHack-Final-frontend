@@ -8,8 +8,12 @@ export type UserApi = {
     Role: string,    
 }
 
+export type UserLogin = {
+    email: string,
+    password: string
+}
+
 export type UserModel = {
-    id: string,
     name: string,
     surname: string,
     middlename: string,
@@ -18,8 +22,12 @@ export type UserModel = {
     role: string, 
 }
 
+export type ConfirmPair = {
+    id: string,
+    code: string
+}
+
 export const normalizeUser = (user: UserApi): UserModel => ({
-    id: user.ID,
     name: user.Name,
     surname: user.Surname,
     middlename: user.Middlename,
@@ -27,3 +35,4 @@ export const normalizeUser = (user: UserApi): UserModel => ({
     password: user.Password,
     role: user.Role
 })
+

@@ -1,8 +1,18 @@
-import { Stepper, Button, Group, TextInput, PasswordInput, Code } from '@mantine/core';
-import { useState } from 'react';
-import s from './AuthForm.module.scss';
-import { useForm } from '@mantine/form';
-import { ValidateForm } from './utils';
+import {
+  Stepper,
+  Button,
+  Group,
+  TextInput,
+  PasswordInput,
+  Code,
+} from "@mantine/core";
+import { useState } from "react";
+import s from "./AuthForm.module.scss";
+import { useForm } from "@mantine/form";
+import { ValidateForm } from "./utils";
+import { register, confirm } from "../../../enteties/user/api";
+import md5 from "md5";
+import { useNavigate } from "react-router-dom";
 import SugToAuth from '../../../widgets/SugToAuth/SugToAuth';
 import { useTranslation } from 'react-i18next';
 
@@ -11,30 +21,74 @@ const AuthForm = () => {
 
     const [active, setActive] = useState(0);
 
-    const form = useForm({
-        initialValues: {
-            name: '',
-            surname: '',
-            middlename: '',
-            role: '',
-            password: '',
-            confirmPassword: '',
-            email: '',
-            code: '',
-        },
+  const [error, setError] = useState<string | null>(null);
+  const [codeError, setCodeError] = useState<string | null>(null);
+  const [userID, setUserID] = useState<string | null>(null);
+  const history = useNavigate();
+  const form = useForm({
+    initialValues: {
+      name: "",
+      surname: "",
+      middlename: "",
+      role: "",
+      password: "",
+      confirmPassword: "",
+      email: "",
+      code: "",
+    },
 
-        validate: (values) => { return ValidateForm(t, active, values); },
+    validate: (values) => {
+      return ValidateForm(t, active, values);
+    },
+  });
+
+  const nextStep = () =>
+    setActive((current) => {
+      if (form.validate().hasErrors) {
+        return current;
+      }
+      if (current === 1) {
+        register({
+          name: form.values.name,
+          surname: form.values.surname,
+          middlename: form.values.middlename,
+          role: form.values.role,
+          email: form.values.email,
+          password: md5(form.values.password),
+        })
+          .then((response) => {
+            setError(null);
+            const data = response.body.id;
+            console.log(data);
+            setUserID(data);
+          })
+          .catch((error) => {
+            if (error.response.status === 409) {
+              setError("Уже есть аккаунт привязанный к этой почте");
+            }
+            setError("Произошла ошибка");
+            return;
+          });
+      }
+
+      if (current === 2) {
+        confirm({
+          code: form.values.code,
+          id: userID!,
+        })
+          .then(() => {
+            setCodeError(null);
+            history("/"); 
+          })
+          .catch((error) => {
+            setCodeError("Произошла ошибка");
+          });
+      }
+      return current < 3 ? current + 1 : current;
     });
 
-    const nextStep = () =>
-        setActive((current) => {
-            if (form.validate().hasErrors) {
-                return current;
-            }
-            return current < 3 ? current + 1 : current;
-        });
-
-    const prevStep = () => setActive((current) => (current > 0 ? current - 1 : current));
+  const prevStep = () =>
+    setActive((current) => (current > 0 ? current - 1 : current));
 
     return (
         <>
@@ -66,6 +120,7 @@ const AuthForm = () => {
                 </Stepper.Step>
 
                 <Stepper.Step label={t("registration.secondstep")} description={t("registration.seconddesc")}>
+                <p className={s.error}>{error}</p>
                     <TextInput
                         mt="md"
                         label={t("registration.email")}
@@ -90,6 +145,7 @@ const AuthForm = () => {
 
                 <Stepper.Step label={t("registration.thirdstep")} description={t("registration.thirddesc")}>
                     <h2>{t("registration.codesent")} {form.values.email}</h2>
+                    <p className={s.error}>{codeError}</p>
                     <TextInput
                         label={t("registration.code")}
                         placeholder="000000"

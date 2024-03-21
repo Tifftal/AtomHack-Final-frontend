@@ -3,9 +3,16 @@ import { useForm } from "@mantine/form";
 import s from "./auth.module.scss";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { login } from "../../enteties/user/api";
+import { useState } from "react";
+import md5 from "md5";
+import { useNavigate } from "react-router-dom";
+
 const Auth = () => {
   const { t } = useTranslation();
 
+  const [error, setError] = useState<string | null>(null);
+  const history = useNavigate();
   const auth = useForm({
     initialValues: {
       email: "",
@@ -19,11 +26,27 @@ const Auth = () => {
     },
   });
 
-  const handleLogin = () => { };
+  const handleLogin = () => {
+    login({
+      email: auth.values.email,
+      password: md5(auth.values.password),
+    })
+      .then((data) => {
+        console.log(data);
+        setError(null);
+        history("/");
+      })
+      .catch((error) => {
+        if (error.response.status === 400) {
+          setError("Неверные данные");
+        }
+      });
+  };
 
   return (
     <div className={s.content}>
       <form onSubmit={auth.onSubmit(handleLogin)} className={s.form}>
+        <p className={s.error}>{error}</p>
         <TextInput
           label="Email"
           withAsterisk

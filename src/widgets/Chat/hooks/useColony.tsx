@@ -5,12 +5,17 @@ import {
   ColonyPathEnum,
   IMessage,
   IOption,
+  ISessionDataClose,
+  ISessionDataOpen,
 } from "../../../utils/types";
-
+import axios, { AxiosResponse } from "axios";
 import Stomp from "stompjs";
 
 export const useColony = () => {
   const [colony, setColony] = useState<IOption<ColonyEnum>>();
+  const prevColony = useRef<IOption<ColonyEnum> | null>(null);
+  const sessionRef = useRef<string | null>(null);
+
   const colonies: IOption[] = [
     {
       label: "Акварион",
@@ -34,8 +39,11 @@ export const useColony = () => {
     },
   ];
   const handleSetColony = useCallback(
-    (option: IOption<ColonyEnum>) => setColony(option),
-    []
+    (option: IOption<ColonyEnum>) => {
+      prevColony.current = colony || null;
+      setColony(option);
+    },
+    [colony]
   );
 
   const stompClient = useRef<Stomp.Client | null>(null);
@@ -79,11 +87,42 @@ export const useColony = () => {
     stompClient.current = null;
   };
 
+  const openSession = async (url: string, fio: string) => {
+    const response = await axios.post<unknown, AxiosResponse<ISessionDataOpen>>(
+      url,
+      {
+        fio: fio,
+      },
+    );
+    sessionRef.current = response.data.sessionId;
+    return response.data.sessionId;
+  };
+
+  const closeSession = async (url: string, session: string) => {
+    const response = await axios.post<
+      unknown,
+      AxiosResponse<ISessionDataClose>
+    >(url, {
+      sessionId: session,
+    });
+    return response.data.sessionId;
+  };
+
   const createConnection = async () => {
     if (!colony || colony.value === ColonyEnum.Terramorf) return;
 
+    if (stompClient.current) {
+      if (!prevColony.current?.value || !sessionRef.current) return;
+      await closeSession(prevColony.current.value, sessionRef.current);
+    }
+
+    const session = await openSession(
+      `http://${ColonyPathEnum[colony.value]}/session/open`,
+      "kabanets vladimir" // todo
+    );
+
     const socket = new window.SockJS(
-      `http://${ColonyPathEnum[colony.value]}/api/ws`
+      `http://${ColonyPathEnum[colony.value]}/topic/events/${session}`
     );
     const stomp = Stomp.over(socket);
     stompClient.current = stomp;
