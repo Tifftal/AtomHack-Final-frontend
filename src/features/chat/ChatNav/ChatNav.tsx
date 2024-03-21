@@ -1,6 +1,6 @@
 import styles from "./ChatNav.module.scss";
 import { IconBuildingCommunity, IconX, IconArrowsMaximize, IconArrowsMinimize } from "@tabler/icons-react";
-import { ActionIcon, Group, Select } from "@mantine/core";
+import { ActionIcon, Group, Box, Select } from "@mantine/core";
 import { FC } from "react";
 import { ChatNavProps } from "./ChatNav.types";
 import { ColonyEnum, IOption } from "../../../utils/types";
@@ -11,7 +11,7 @@ export const ChatNav: FC<ChatNavProps> = (props) => {
   const { colonies, colony, handleSetColony, toggleReport, setScreen, isFull } = props;
 
   return (
-    <div className={styles.root}>
+    <Box bg={colony ? colony.value : 'Crystallia'} className={styles.root}>
       <Select
         leftSectionPointerEvents="none"
         leftSection={
@@ -23,9 +23,11 @@ export const ChatNav: FC<ChatNavProps> = (props) => {
         value={colony ? colony.value : null}
         onChange={(_value, option) => {
           handleSetColony(option as IOption<ColonyEnum>);
+          console.log(option)
         }}
         data={colonies}
       />
+
       <Group>
         <ActionIcon
           variant="subtle"
@@ -47,5 +49,6 @@ export const ChatNav: FC<ChatNavProps> = (props) => {
         </ActionIcon>
       </Group>
     </div>
+    </Box>
   );
 };

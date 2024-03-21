@@ -5,6 +5,7 @@ export interface ICommand {
 }
 
 export interface IMessage {
+  colony?: IOption<ColonyEnum>
   isUserMessage?: boolean;
   time: string;
   content: string | ICommand[];
@@ -34,4 +35,15 @@ export enum ColonyPathEnum {
   Terramorf = "terramorf.cry1s.ru",
   Crystallia = "authatom.cry1s.ru",
   DesertVortex = "dustwind.cry1s.ru",
+}
+
+export interface ISessionDataClose {
+  timestamp: string;
+  sessionId: string;
+}
+
+export interface ISessionDataOpen {
+  timestamp: string;
+  sessionId: string;
+  pattern: "OPEN_SESSION";
 }

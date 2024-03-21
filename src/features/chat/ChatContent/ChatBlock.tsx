@@ -4,7 +4,7 @@ import { IChatBlockProps } from "./ChatBlock.types";
 import { clsx as cx } from "clsx";
 
 export const ChatBlock = (props: IChatBlockProps) => {
-  const { messages } = props;
+  const { messages, colony } = props;
   return (
     <div className={styles.root}>
       <div className={styles.body}>
@@ -15,7 +15,7 @@ export const ChatBlock = (props: IChatBlockProps) => {
               [styles.user]: message.isUserMessage,
             })}
           >
-            <Message {...message} />
+            <Message {...message} colony={colony} />
           </div>
         ))}
       </div>
