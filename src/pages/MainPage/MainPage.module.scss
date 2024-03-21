@@ -1,5 +1,11 @@
 .first {
     color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    h1{
+        margin-right: 10px;
+    }
 }
 
 .second {

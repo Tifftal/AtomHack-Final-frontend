@@ -7,6 +7,7 @@ import { MantineProvider } from '@mantine/core';
 import { theme } from './ThemeProvider';
 import MainPage from '../pages/MainPage/MainPage';
 import Navbar from '../widgets/Navbar/Navbar';
+import NotFound from '../pages/NotFound/NotFound';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path='/auth' element={<Auth />} />
           <Route path='/registration' element={<Registration />} />
           <Route path='/' element={<MainPage />} />
+          <Route path='*' element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </MantineProvider>
