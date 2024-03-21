@@ -1,6 +1,6 @@
 import styles from "./ChatNav.module.scss";
 import { IconBuildingCommunity } from "@tabler/icons-react";
-import { ActionIcon, Select } from "@mantine/core";
+import { ActionIcon, Button, Select } from "@mantine/core";
 import { FC } from "react";
 import { IChatNavProps } from "./ChatNav.types";
 import { ColonyEnum, IOption } from "../../../utils/types";
