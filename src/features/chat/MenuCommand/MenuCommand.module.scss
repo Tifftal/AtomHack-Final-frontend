@@ -1,0 +1,16 @@
+.menu-command-btn {
+    border-radius: 5px;
+    background-color: var(--clr-main2);
+    padding: 4px;
+    border: none;
+    outline: none;
+    transition: 0.4s;
+
+    &:hover {
+        background-color: var(--clr-main3);
+    }
+
+    &:active {
+        background-color: var(--clr-main4);
+    }
+}
